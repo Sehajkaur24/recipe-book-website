@@ -1,3 +1,5 @@
+import { Button } from "@/common/ui/button";
+import { Input } from "@/common/ui/input";
 
 export default function SignupPage() {
   return (
@@ -6,11 +8,11 @@ export default function SignupPage() {
         <h2 className="text-3xl text-orange-500 font-bold text-center mb-6"> Sign Up</h2>
 
         <form className="space-y-4">
-          <input type="text" placeholder="Full Name" className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400" />
-          <input type="email" placeholder="Email" className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400" />
-          <input type="password"placeholder="Password"className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"/>
-          <input type="password" placeholder="Confirm Password" className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"/>
-          <button type="submit" className="w-full bg-orange-400 text-white font-semibold p-3 rounded-lg hover:bg-orange-500 transition" >  Create Account</button>
+          <Input type="text" placeholder="Full Name"/>
+          <Input type="email" placeholder="Email" />
+          <Input type="password"placeholder="Password"/>
+          <Input type="password" placeholder="Confirm Password"/>
+          <Button>Create Account</Button>
         </form>
       </div>
     </div>
