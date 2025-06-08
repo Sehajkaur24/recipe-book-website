@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "web:dev": "pnpm --filter frontend dev",
+    "api:dev": "pnpm --filter backend start:dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
