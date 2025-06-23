@@ -10,9 +10,9 @@ export class AuthController {
   ) {}
 
   @Post("/sign-in")
-  signIn(@Body() data: SignInDto) {
+  async signIn(@Body() data: SignInDto) {
     return {
-      msg: "save-this-token-in-localstorage"
+      data: await this.authService.signIn(data)
     }
   }
 
