@@ -7,35 +7,33 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+ const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    fetch("http://localhost:8000/auth/sign-in", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();  
-        } else {
-          throw new Error("Invalid credentials");
-        }
-      })
-      .then((data) => {
-
-        localStorage.setItem("token", data.msg);
-        alert("Login successful! Token saved.");
-        console.log("Saved token: ", data.msg);
-      })
-      .catch((error) => {
-        alert(error.message);
+    try {
+      const res = await fetch("http://localhost:8000/auth/sign-in", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
       });
+
+      if (!res.ok) {
+        throw new Error("Invalid credentials");
+      }
+
+      const data = await res.json();
+      localStorage.setItem("token", data.msg);
+      alert("Login successful! Token saved.");
+      console.log("Saved token: ", data.msg);
+      
+    } catch (error: any) {
+      alert(error.message);
+    }
   };
 
   return (
@@ -61,3 +59,4 @@ export default function SignIn() {
     </div>
   );
 }
+
