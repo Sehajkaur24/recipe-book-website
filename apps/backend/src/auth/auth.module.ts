@@ -9,11 +9,11 @@ import { JwtModule } from '@nestjs/jwt';
   imports: [
     TypeOrmModule.forFeature([User]),
     JwtModule.register({
-        secret: "secretKey",
-        signOptions: {
-            expiresIn: "1h"
-        }
-    })
+      secret: 'secretKey',
+      signOptions: {
+        expiresIn: '1h',
+      },
+    }),
   ],
   controllers: [AuthController],
   providers: [AuthService],
