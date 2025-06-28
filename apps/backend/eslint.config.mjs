@@ -14,7 +14,7 @@ export default tseslint.config(
   eslintPluginPrettierRecommended,
   {
     plugins: {
-      "@stylistic": stylistic,
+      '@stylistic': stylistic,
     },
     languageOptions: {
       globals: {
@@ -34,7 +34,8 @@ export default tseslint.config(
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-floating-promises': 'warn',
       '@typescript-eslint/no-unsafe-argument': 'warn',
-      "@stylistic/linebreak-style": "error"
+      '@stylistic/linebreak-style': 'error',
+      'max-statements': ['error', { max: 7 }],
     },
   },
 );
