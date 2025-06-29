@@ -11,3 +11,15 @@ export class UserAlreadyExists extends HttpException {
     );
   }
 }
+
+export class InvalidCredentials extends HttpException {
+  constructor() {
+    super(
+      {
+        code: 'INVALID_CREDENTIALS',
+        error: 'Invalid Credentials',
+      },
+      HttpStatus.UNAUTHORIZED,
+    );
+  }
+}

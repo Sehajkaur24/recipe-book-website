@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcrypt';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
@@ -7,6 +7,7 @@ import { SignUpDto } from './dto/sign-up.dts';
 import { UserAlreadyExists } from './auth.exception';
 import { JwtService } from '@nestjs/jwt';
 import { SignInDto } from './dto/sign-in.dto';
+import { InvalidCredentials } from './auth.exception';
 
 @Injectable()
 export class AuthService {
@@ -35,7 +36,7 @@ export class AuthService {
   async signIn(data: SignInDto) {
     const user = await this.validateUser(data.username, data.password);
     if (!user) {
-      throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
+      throw new InvalidCredentials();
     }
     return {
       token: await this.generateToken(user),
