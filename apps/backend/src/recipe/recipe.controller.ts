@@ -1,42 +1,32 @@
 import {
   Controller,
-  Get,
   Post,
   Body,
-  Patch,
-  Param,
-  Delete,
+  UseGuards,
+  Req,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { RecipeService } from './recipe.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
-import { UpdateRecipeDto } from './dto/update-recipe.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { Request } from 'express';
+import { User } from 'src/auth/entities/user.entity';
 
+@UseInterceptors(ClassSerializerInterceptor)
 @Controller('recipe')
 export class RecipeController {
   constructor(private readonly recipeService: RecipeService) {}
 
+  @ApiBearerAuth()
   @Post()
-  create(@Body() createRecipeDto: CreateRecipeDto) {
-    return this.recipeService.create(createRecipeDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.recipeService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.recipeService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRecipeDto: UpdateRecipeDto) {
-    return this.recipeService.update(+id, updateRecipeDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.recipeService.remove(+id);
+  @UseGuards(AuthGuard)
+  async create(
+    @Body() createRecipeDto: CreateRecipeDto,
+    @Req() request: Request,
+  ) {
+    const user = request['user'] as User;
+    return this.recipeService.create(createRecipeDto, user);
   }
 }
