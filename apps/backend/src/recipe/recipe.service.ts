@@ -22,4 +22,8 @@ export class RecipeService {
     });
     return this.recipeRepo.save(recipe);
   }
+
+  async findAll(user: User) {
+    return this.recipeRepo.find({ where: { user } });
+  }
 }

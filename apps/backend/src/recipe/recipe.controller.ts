@@ -6,6 +6,7 @@ import {
   Req,
   UseInterceptors,
   ClassSerializerInterceptor,
+  Get,
 } from '@nestjs/common';
 import { RecipeService } from './recipe.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
@@ -28,5 +29,13 @@ export class RecipeController {
   ) {
     const user = request['user'] as User;
     return this.recipeService.create(createRecipeDto, user);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @Get()
+  async findAll(@Req() request: Request) {
+    const user = request['user'] as User;
+    return this.recipeService.findAll(user);
   }
 }
