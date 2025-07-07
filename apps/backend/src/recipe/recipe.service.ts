@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Recipe } from './entities/recipe.entity';
 import { Repository } from 'typeorm';
 import { User } from 'src/auth/entities/user.entity';
+import { RecipeNotFound } from './recipe.exception';
 
 @Injectable()
 export class RecipeService {
@@ -25,5 +26,17 @@ export class RecipeService {
 
   async findAll(user: User) {
     return this.recipeRepo.find({ where: { user } });
+  }
+
+  async delete(id: number, user: User) {
+    const recipe = await this.recipeRepo.findOne({
+      where: { id, user },
+    });
+
+    if (!recipe) {
+      throw new RecipeNotFound();
+    }
+
+    return this.recipeRepo.remove(recipe);
   }
 }

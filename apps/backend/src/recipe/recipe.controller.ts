@@ -7,6 +7,8 @@ import {
   UseInterceptors,
   ClassSerializerInterceptor,
   Get,
+  Delete,
+  Param,
 } from '@nestjs/common';
 import { RecipeService } from './recipe.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
@@ -37,5 +39,13 @@ export class RecipeController {
   async findAll(@Req() request: Request) {
     const user = request['user'] as User;
     return this.recipeService.findAll(user);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @Delete(':id')
+  async delete(@Param('id') id: number, @Req() request: Request) {
+    const user = request['user'] as User;
+    return await this.recipeService.delete(id, user);
   }
 }
