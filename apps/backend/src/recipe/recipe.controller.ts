@@ -9,6 +9,7 @@ import {
   Get,
   Delete,
   Param,
+  Put,
 } from '@nestjs/common';
 import { RecipeService } from './recipe.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
@@ -16,6 +17,7 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { Request } from 'express';
 import { User } from 'src/auth/entities/user.entity';
+import { UpdateRecipeDto } from './dto/update-recipe.dto';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('recipe')
@@ -35,10 +37,30 @@ export class RecipeController {
 
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
+  @Put(':id')
+  async update(
+    @Param('id') id: number,
+    @Body() updateRecipeDto: UpdateRecipeDto,
+    @Req() request: Request,
+  ) {
+    const user = request['user'] as User;
+    return this.recipeService.update(id, updateRecipeDto, user);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
   @Get()
   async findAll(@Req() request: Request) {
     const user = request['user'] as User;
     return this.recipeService.findAll(user);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @Get(':id')
+  async findOne(@Param('id') id: number, @Req() request: Request) {
+    const user = request['user'] as User;
+    return this.recipeService.findOne(id, user);
   }
 
   @ApiBearerAuth()
