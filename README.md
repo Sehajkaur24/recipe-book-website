@@ -1,6 +1,6 @@
 # 🍽️ Recipe Book Website
 
-Welcome to the **Recipe Book Website** — a modern, interactive platform for food enthusiasts to create, view, edit, delete, and manage their favorite recipes!
+Welcome to the **Recipe Book Website** — a full-stack monorepo application where users can create, view, edit, delete and manage their favorite recipes! with a beautiful, modern UI and robust backend. and manage their favorite recipes!
 
 > “Cooking is an art, and your kitchen is your canvas.”
 
